@@ -130,3 +130,4 @@ The `sample-files/` directory contains test archives in various formats for vali
 ## License
 
 Educational project for Linux/Bash proficiency exam.
+

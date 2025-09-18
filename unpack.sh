@@ -160,6 +160,6 @@ for arg in "$@"; do
 done
 
 printf 'Decompressed %d archive(s)\n' "$decompressed_count"
-# Exit with the exact number of files NOT decompressed (cap to 0..255 for portability)
+# Exit with the exact number of files NOT decompressed
 exit $(( not_decompressed_count & 255 ))
 

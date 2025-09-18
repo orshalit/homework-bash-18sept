@@ -72,8 +72,6 @@ derive_out_gzip()     { derive_out_from_suffix "$1" ".gz" ".GZ" ".z" ".Z"; }
 derive_out_bzip2()    { derive_out_from_suffix "$1" ".bz2" ".BZ2" ".bz" ".BZ"; }
 derive_out_compress() { derive_out_from_suffix "$1" ".Z" ".z"; }
 
-# Optional: add .xz support as an example of easy extensibility
-derive_out_xz()      { derive_out_from_suffix "$1" ".xz" ".XZ"; }
 
 # Atomic write helper: write to temp file in target directory, then mv -f over
 write_atomic() {
@@ -119,12 +117,6 @@ unpack_compress() {
   fi
 }
 
-unpack_xz() {
-  local f="$1" out
-  out=$(derive_out_xz "$f")
-  require_cmd xz || return 1
-  write_atomic "$out" xz -cd -- "$f"
-}
 
 process_file() {
   local f="$1" mime handler
@@ -191,8 +183,6 @@ UNPACK_HANDLER_BY_MIME[application/bzip2]=unpack_bzip2
 # UNIX compress (.Z)
 UNPACK_HANDLER_BY_MIME[application/x-compress]=unpack_compress
 UNPACK_HANDLER_BY_MIME[application/compress]=unpack_compress
-# Example new format: xz
-UNPACK_HANDLER_BY_MIME[application/x-xz]=unpack_xz
 
 for arg in "$@"; do
   process_path "$arg"
